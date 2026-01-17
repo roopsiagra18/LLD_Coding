@@ -132,3 +132,26 @@ booking1.book(2, sedan.vehicle_id, 36)
 booking2 = BookingService(vehicles, pricing_strategy)
 booking2.book(3, bike.vehicle_id, 24)
 booking2.book(4, bike2.vehicle_id, 12)
+
+import threading
+
+def try_booking(user_id, booking_service, vehicle_id, hours):
+    try:
+        price = booking_service.book(user_id, vehicle_id, hours)
+        print(f"User {user_id} booked successfully. Price = {price}")
+    except Exception as e:
+        print(f"User {user_id} failed: {e}")
+
+
+vehicle_ids = [1, 2, 3, 4, 5]
+threads = []
+booking_service = BookingService(vehicles, pricing_strategy)
+for i, vid in enumerate(vehicle_ids):
+    t = threading.Thread(
+        target=try_booking,
+        args=(i+1, booking_service, vid, 10)
+    )
+    threads.append(t)
+    t.start()
+for t in threads:
+    t.join()
