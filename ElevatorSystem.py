@@ -170,4 +170,11 @@ for _ in range(6):
     system.step()
 
 
-    
+"""
+System → Controller → Scheduler → Elevator
+Elevator = (floor, state, direction)
+Requests = UP heap + DOWN heap
+External → Scheduler
+Internal → Elevator
+step() = time tick
+"""
